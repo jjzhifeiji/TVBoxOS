@@ -1,7 +1,10 @@
 package com.github.tvbox.osc.base;
 
 import android.app.Activity;
+import android.util.Log;
+
 import androidx.multidex.MultiDexApplication;
+
 import com.github.catvod.crawler.JsLoader;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.callback.EmptyCallback;
@@ -20,6 +23,9 @@ import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
 import com.p2p.P2PClass;
 import com.whl.quickjs.android.QuickJSLoader;
+
+import java.util.ArrayList;
+
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
 
@@ -29,6 +35,9 @@ import me.jessyan.autosize.unit.Subunits;
  * @description:
  */
 public class App extends MultiDexApplication {
+
+    private static final String TAG = "App";
+
     private static App instance;
 
     private static P2PClass p;
@@ -67,6 +76,32 @@ public class App extends MultiDexApplication {
         if (!Hawk.contains(HawkConfig.PLAY_TYPE)) {
             Hawk.put(HawkConfig.PLAY_TYPE, 1);
         }
+        ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+
+        Log.d(TAG, "API_HISTORY: ");
+
+        for (String historyItem : history) {
+            Log.d(TAG, historyItem);
+        }
+
+
+//        ArrayList<String> list = new ArrayList<String>();
+//        list.add("https://jihulab.com/owen2000wy/owentv/-/raw/main/OwenTV.json");
+//        list.add("https://jihulab.com/z-blog/vip/-/raw/main/xyq/t.json");
+//        list.add("https://mirror.ghproxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/0825.json");
+//        list.add("https://100km.top/0");
+//        list.add("http://home.jundie.top:81/top98.json");
+//        list.add("https://xhdwc.tk/0");
+//        list.add("https://tvbox.cainisi.cf");
+//        list.add("http://xhww.fun:63/小米/DEMO.json");
+//        list.add("https://ghproxy.net/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json");
+//        list.add("http://饭太硬.top/tv");
+//        list.add("http://大屌蜂蜜.eu.org");
+//        list.add("http://xhdwc.tk/0");
+//        list.add("https://agit.ai/relax/adcc/raw/branch/master/tvbox.json");
+//        list.add("http://pandown.pro/tvbox/tvbox.json");
+//        Hawk.put(HawkConfig.API_HISTORY, list);
+
     }
 
     public static App getInstance() {
@@ -81,10 +116,12 @@ public class App extends MultiDexApplication {
 
 
     private VodInfo vodInfo;
-    public void setVodInfo(VodInfo vodinfo){
+
+    public void setVodInfo(VodInfo vodinfo) {
         this.vodInfo = vodinfo;
     }
-    public VodInfo getVodInfo(){
+
+    public VodInfo getVodInfo() {
         return this.vodInfo;
     }
 
@@ -107,6 +144,7 @@ public class App extends MultiDexApplication {
     public void setDashData(String data) {
         dashData = data;
     }
+
     public String getDashData() {
         return dashData;
     }
